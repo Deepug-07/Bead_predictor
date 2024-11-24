@@ -3,6 +3,8 @@ import joblib
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
+from sklearn.preprocessing import StandardScaler
+
 
 # Define your model architecture
 def create_model(input_shape):
@@ -35,6 +37,7 @@ def predict_outputs(wfs, ts, voltage):
     input_data = np.array([[wfs, ts, voltage]])
     
     # Scale the input data
+    scaler=StandardScaler()
     input_data_scaled = scaler.transform(input_data)
     
     # Use the model to predict the outputs
