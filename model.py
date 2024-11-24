@@ -6,9 +6,9 @@ from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from sklearn.preprocessing import StandardScaler
 
 # Define your model architecture
-def create_model():
+def create_model(input_shape):
     model = Sequential()
-    model.add(Dense(128, input_shape=(X_train.shape[1],), activation='relu'))
+    model.add(Dense(128, input_shape=(input_shape,), activation='relu'))
     model.add(BatchNormalization())
     model.add(Dropout(0.3))
 
@@ -26,7 +26,8 @@ def create_model():
     return model
 
 # Load the model and weights
-model = create_model()
+input_shape = 3
+model = create_model(input_shape)
 model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
 model.load_weights('neural_network_weights_v2.weights.h5')
 
