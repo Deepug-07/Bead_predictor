@@ -36,9 +36,9 @@ def predict_outputs(wfs, ts, voltage):
     model.load_weights('neural_network_weights_v2.weights.h5')
     model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
 
-    scaler = StandardScaler()
-    scaler.fit(input_data)  # Fit on the input data (not ideal)
-    
+    # Load the scaler
+    scaler = joblib.load('scaler.pkl')
+
     # Scale the input data
     input_data_scaled = scaler.transform(input_data)
     
