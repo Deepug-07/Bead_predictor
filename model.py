@@ -6,7 +6,6 @@ from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
-
 # Define your model architecture
 def create_model(input_shape):
     model = Sequential()
@@ -41,14 +40,11 @@ def predict_outputs(wfs, ts, voltage):
     scaler=StandardScaler()
     X_train=scaler.fit_transform(X_train)
     X_test=scaler.transform(X_test)
-
-    model.load_weights('neural_network_weights_v2.weights.h5')
+    
     model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
+    model.load_weights('neural_network_weights_v2.weights.h5')
     
-    # Scale the input data if necessary
-    scaler.fit(input_data)  # Fit on the input data (not ideal)
     
-    # Scale the input data
     input_data_scaled = scaler.transform(input_data)
     
     # Use the model to predict the outputs
