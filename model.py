@@ -4,9 +4,6 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 
-# Load the fitted scaler
-scaler = joblib.load('scaler.pkl')  # Load the fitted scaler
-
 # Define your model architecture
 def create_model(input_shape):
     model = Sequential()
@@ -29,8 +26,9 @@ def create_model(input_shape):
 # Load the model and weights
 input_shape = 3  # Adjust based on your input features
 model = create_model(input_shape)
-model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
+
 model.load_weights('neural_network_weights_v2.weights.h5')
+model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
 
 def predict_outputs(wfs, ts, voltage):
     # Create a 2D array with the input parameters
