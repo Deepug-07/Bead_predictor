@@ -30,6 +30,7 @@ input_shape = 3
 model = create_model(input_shape)
 model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
 model.load_weights('neural_network_weights_v2.weights.h5')
+scaler=StandardScaler()
 
 
 def predict_outputs(wfs, ts, voltage):
