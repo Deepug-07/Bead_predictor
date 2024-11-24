@@ -4,6 +4,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 
 
 # Define your model architecture
@@ -33,12 +34,20 @@ def predict_outputs(wfs, ts, voltage):
     input_shape = 3  # Adjust based on your input features
     model = create_model(input_shape)
 
+    data=pd.read_csv('Dataset.csv')
+    X=data[['WFS','TS','Voltage']].values
+    y=data[['BH','BW']].values
+    X_train, X_test, y_train, y_test=train_test_split(X,y,test_size=0.2,random_state=42)
+    scaler=StandardScaler()
+    X_train=scaler.fit_transform(X_train)
+    X_test=scaler.transform(X_test)
+
     model.load_weights('neural_network_weights_v2.weights.h5')
     model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
-
-    # Load the scaler
-    scaler = joblib.load('scaler.pkl')
-
+    
+    # Scale the input data if necessary
+    scaler.fit(input_data)  # Fit on the input data (not ideal)
+    
     # Scale the input data
     input_data_scaled = scaler.transform(input_data)
     
