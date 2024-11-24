@@ -25,16 +25,16 @@ def create_model(input_shape):
     model.add(Dense(2, activation='linear'))  # Output layer for bead height and width
     return model
 
-# Load the model and weights
-input_shape = 3  # Adjust based on your input features
-model = create_model(input_shape)
-
-model.load_weights('neural_network_weights_v2.weights.h5')
-model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
 
 def predict_outputs(wfs, ts, voltage):
     # Create a 2D array with the input parameters
     input_data = np.array([[wfs, ts, voltage]])
+
+    input_shape = 3  # Adjust based on your input features
+    model = create_model(input_shape)
+
+    model.load_weights('neural_network_weights_v2.weights.h5')
+    model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
 
     scaler = StandardScaler()
     scaler.fit(input_data)  # Fit on the input data (not ideal)
