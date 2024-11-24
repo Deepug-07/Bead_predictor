@@ -35,9 +35,11 @@ model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
 def predict_outputs(wfs, ts, voltage):
     # Create a 2D array with the input parameters
     input_data = np.array([[wfs, ts, voltage]])
+
+    scaler = StandardScaler()
+    scaler.fit(input_data)  # Fit on the input data (not ideal)
     
     # Scale the input data
-    scaler=StandardScaler()
     input_data_scaled = scaler.transform(input_data)
     
     # Use the model to predict the outputs
