@@ -5,8 +5,6 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from sklearn.preprocessing import StandardScaler
 
-scaler = StandardScaler()
-scaler = joblib.load('scaler.pkl')
 
 # Define your model architecture
 def create_model(input_shape):
@@ -38,6 +36,10 @@ def predict_outputs(wfs, ts, voltage):
     # Create a 2D array with the input parameters
     input_data = np.array([[wfs, ts, voltage]])
 
+    
+    scaler.fit(input_data)  # Fit on the input data (not ideal)
+    
+    # Scale the input data
     input_data_scaled = scaler.transform(input_data)
     
     # Use the model to predict the outputs
