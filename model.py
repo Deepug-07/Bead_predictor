@@ -5,6 +5,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+import pandas as pd
 
 # Define your model architecture
 def create_model(input_shape):
@@ -40,7 +41,7 @@ def predict_outputs(wfs, ts, voltage):
     scaler=StandardScaler()
     X_train=scaler.fit_transform(X_train)
     X_test=scaler.transform(X_test)
-    
+
     model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
     model.load_weights('neural_network_weights_v2.weights.h5')
     
