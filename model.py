@@ -3,7 +3,9 @@ import joblib
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
-from sklearn.preprocessing import StandardScaler
+
+# Load the fitted scaler
+scaler = joblib.load('scaler.pkl')  # Load the fitted scaler
 
 # Define your model architecture
 def create_model(input_shape):
@@ -21,17 +23,14 @@ def create_model(input_shape):
     model.add(Dropout(0.3))
 
     model.add(Dense(16, activation='relu'))
-
-    model.add(Dense(2, activation='linear'))
+    model.add(Dense(2, activation='linear'))  # Output layer for bead height and width
     return model
 
 # Load the model and weights
-input_shape = 3
+input_shape = 3  # Adjust based on your input features
 model = create_model(input_shape)
 model.compile(optimizer=Adam(), loss='mse', metrics=['mae'])
 model.load_weights('neural_network_weights_v2.weights.h5')
-scaler=StandardScaler()
-
 
 def predict_outputs(wfs, ts, voltage):
     # Create a 2D array with the input parameters
